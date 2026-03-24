@@ -85,6 +85,7 @@ default:
   #
   # If you do NOT have a lock step and you want "lock right before suspend",
   # use a locker that exits immediately (daemon/background), e.g. via a wrapper script.
+  # This command runs when the system prepares for sleep (PrepareForSleep event).
   #pre_suspend_command "sync"
 
   # Non-browser media/audio inhibit only. Browser/media-tab inhibit is handled
@@ -208,6 +209,7 @@ default:
   #enable_dbus_inhibit false
 
   # Optional: run before suspending (e.g., ensure lock is up)
+  # This runs when the system prepares for sleep (PrepareForSleep event).
   #pre_suspend_command "swaylock"
 
   # Non-browser media/audio inhibit only. Browser/media-tab inhibit is handled

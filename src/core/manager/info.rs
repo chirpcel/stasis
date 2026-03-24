@@ -173,9 +173,9 @@ fn render_config(cfg_opt: Option<&Config>, state: &State) -> String {
     }
 
     if let Some(cmd) = cfg.pre_suspend_command.as_deref() {
-        out.push_str(&format!("PreSuspendCommand: {cmd}\n"));
+        out.push_str(&format!("PreSleepCommand: {cmd}\n"));
     } else {
-        out.push_str("PreSuspendCommand: none\n");
+        out.push_str("PreSleepCommand: none\n");
     }
 
     out.push_str("\nPlan:\n");

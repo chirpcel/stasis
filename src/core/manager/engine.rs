@@ -199,6 +199,10 @@ impl Manager {
             }
 
             Event::PrepareForSleep { .. } => {
+                if let Some(cmd) = cfg.pre_suspend_command.clone() {
+                    out.push(Action::RunCommand { command: cmd });
+                }
+
                 state.set_system_paused(true);
                 self.refresh_paused(state, now_ms);
             }
@@ -721,7 +725,7 @@ impl Manager {
         out
     }
 
-    fn actions_for_plan_step(&self, state: &State, step: &PlanStep, cfg: &Config) -> Vec<Action> {
+    fn actions_for_plan_step(&self, state: &State, step: &PlanStep, _cfg: &Config) -> Vec<Action> {
         match &step.kind {
             PlanStepKind::LockScreen => {
                 if state.is_locked() {
@@ -736,11 +740,6 @@ impl Manager {
 
             PlanStepKind::Suspend => {
                 let mut out = Vec::new();
-
-                // pre_suspend_command always fires first, before the actual suspend command.
-                if let Some(cmd) = cfg.pre_suspend_command.clone() {
-                    out.push(Action::RunCommand { command: cmd });
-                }
 
                 if let Some(cmd) = step.command.clone() {
                     out.push(Action::RunCommand { command: cmd });
